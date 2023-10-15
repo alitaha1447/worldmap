@@ -34,47 +34,32 @@ function Home() {
     });
   }, []);
 
-  // useEffect(() => {
-  //   console.log(`Region : ${region} and Country : ${countryName}`);
-  //   if (region === "" || countryName === "") {
-  //     setFilteredCountriesList(countriesList);
-  //   } else {
-  //     const filteredCountryList = countriesList.filter((country) => {
-  //       if (
-  //         country.region.toLowerCase() === region.toLowerCase() &&
-  //         country.name.toLowerCase().includes(countryName.toLowerCase())
-  //       )
-  //         return true;
-  //       return false;
-  //     });
-  //     setFilteredCountriesList(filteredCountryList);
-  //   }
-  // }, [region, countriesList, countryName]);
-
   useEffect(() => {
-    console.log(`Region : ${region} and Country : ${countryName}`);
+    console.log(`Region : ${region}`);
     if (region === "" && countryName === "") {
       setFilteredCountriesList(countriesList);
     } else {
-      let filteredCountryList = countriesList;
+      let filteredCountries = [];
       if (region.length) {
-        // filter based on region
-        filteredCountryList = countriesList.filter((country) => {
-          if (country.region === region) return true;
+        // 1. filter based on country region
+        filteredCountries = countriesList.filter((country) => {
+          if (country.region.toLowerCase() === region.toLowerCase())
+            return true;
           return false;
         });
       }
       if (countryName.length) {
-        // filter based on name
-        filteredCountryList = countriesList.filter((country) => {
+        // 1. filter based on country name
+        filteredCountries = countriesList.filter((country) => {
           if (country.name.toLowerCase().includes(countryName.toLowerCase()))
             return true;
           return false;
         });
       }
-      setFilteredCountriesList(filteredCountryList);
+
+      setFilteredCountriesList(filteredCountries);
     }
-  }, [region, countryName, countriesList]);
+  }, [countriesList, countryName, region]);
 
   return (
     <div className="App">
